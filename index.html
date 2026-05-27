@@ -2,19 +2,6 @@
 <html>
 <link rel="stylesheet" href="style.css">
 <head>
-
-  <script>
-    function revealInfo() {
-    const userInput = document.getElementById('code-input').value;
-    const infoDiv = document.getElementById('extra-info');
-
-    if (userInput.toUpperCase() === "eH5Q3j89f") {
-        infoDiv.style.display = "block"; 
-    } else {
-        alert("Invalid code! Please try again.");
-    }
-}
-</script>
   
   <title>Seamless Swimming Cleaning</title>
 <link rel="icon" href="https://fav.farm/"🤿/>
@@ -91,7 +78,7 @@
 
 <br>
   
-<input type="text" id="code-input" placeholder="Enter Codes Given From Employees!">
+<input type="text" id="code-input" placeholder="Enter Codes Here!">
 
 <button onclick="revealInfo()">Submit Code</button>
 
@@ -104,6 +91,21 @@
 <br>
 
 <img src="SSC_Logo.jpg" alt="LOGO" style="width:1044px;height:747px;">
- 
+
+<script>
+function checkCode() {
+  const correctCode = "eH5Q3j89f"; 
+  const userInput = document.getElementById("codeInput").value;
+  const infoDiv = document.getElementById("extraInfo");
+
+  if (userInput === correctCode) {
+    infoDiv.style.display = "block"; 
+    alert("Code accepted!");
+  } else {
+    alert("Invalid code. Try again.");
+  }
+}
+</script>      
+      
 </body>
 </html>
