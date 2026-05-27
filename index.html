@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style.css">
 <head>
-  
+  <link rel="stylesheet" href="style.css">
   <title>Seamless Swimming Cleaning</title>
-<style>
-  body {
-    background-image: url('bgforssc.png');
-    background-repeat: no-repeat;
-    background-size: cover;  
-    background-position: center center;
-    background-attachment: fixed; 
-    margin: 0; 
-    height: 100vh; 
-  }
-</style>
+  <link rel="icon" href="https://fav.farm/"/>
+  <style>
+    body {
+      background-image: url('bgforssc.png');
+      background-repeat: no-repeat;
+      background-size: cover;  
+      background-position: center center;
+      background-attachment: fixed; 
+      margin: 0; 
+      height: 100vh; 
+    }
+  </style>
 </head>
 <body>
 
 <h1 style="color:#0D3622; font-size: 35.5px;">Seamless Swimming Cleaning</h1> 
- 
+
 <br>
 <br>
 
 <h1 style="color:#0F4028; font-size: 19.5px;">About This Establishment:</h1>
-<p style="color:#114B2F; font-size: 19.5px;">This establishment was founded on June 21st of 2025. Our goal is to have everybody's swimming goggles be as clean as can be. To do this we have a filtration pump using the finest of clean waters. We use a premium sponge to clean it off (only premium experience). We have three different experiences of cleaning. Normal experience choosers get their goggles cleaned using our engineered cleaner for goggles to get the outside, inside, and lenses. Deep cleans experience hand wased and better waters. Premium experience chooser get hand washed using our premium sponge. We deep clean the goggles making sure there is no dirt.</p>
+<p style="color:#114B2F; font-size: 19.5px;">This establishment was founded on June 21st of 2025. Our goal is to have everybody's swimming goggles be as clean as can be. To do this we have a filtration pump using the finest of clean waters. We use a premium sponge to clean it off (only premium experience). We have three different experiences of cleaning. Normal experience choosers get their goggles cleaned using our engineered cleaner for goggles to get the outside, inside, and lenses. Deep cleans experience hand washed and better waters. Premium experience chooser get hand washed using our premium sponge. We deep clean the goggles making sure there is no dirt.</p>
 
 <br>
 
@@ -33,7 +33,7 @@
 
 <br>
 <h1 style="color:#0F4028; font-size: 19.5px;">Blog</h1>
-<p  style="color:#114B2F; font-size: 19.5px;">We have recently made a new blog! You can visit it here!</p>
+<p style="color:#114B2F; font-size: 19.5px;">We have recently made a new blog! You can visit it here!</p>
 <a href="https://ssctips101.blogspot.com/" style="color:#2E9485; font-size: 19.5px;">Blog!</a>
 
 <br>
@@ -44,14 +44,14 @@
 <br>
 <br> 
 <br>
-  
+
 <h1 style="color:#0F4028; font-size: 19.5px;">Update Log</h1>
 <p style="color:#114B2F; font-size: 19.5px;">0.0.0 -- Opened SSC</p>  
 <p style="color:#114B2F; font-size: 19.5px;">0.0.1 -- Added Prices and fixed a few bugs</p>
 <p style="color:#114B2F; font-size: 19.5px;">0.1.0 -- Added Memberships and Special Deals</p>
 <p style="color:#114B2F; font-size: 19.5px;">0.1.1 -- Added New Background and Blog</p>  
 <br>
-  
+
 <h1 style="color:#0F4028; font-size: 19.5px;">Prices -- With tax</h1>
 <p style="color:#114B2F; font-size: 19.7px;">Normal Cleansing -- $1.00 </p>
 <p style="color:#114B2F; font-size: 19.7px;">Deep Cleansing -- $1.50 </p>
@@ -60,9 +60,9 @@
 <br>
 <br>
 <br>
-  
+
 <h1 style="color:#0F4028; font-size: 19.5px;">Memberships</h1>
-  
+
 <br>
 <br>
 <h1 style="color:#0F4028; font-size: 19.5px;">Memberships -- About</h1>
@@ -76,16 +76,15 @@
 <p style="color:#114B2F; font-size: 19.5px;">Premium Membership -- All Cleansings free || $1 membership fee + $3.50 per month [$4.50 to start!]</p> 
 
 <br>
-  
+
 <input type="text" id="code-input" placeholder="Enter Codes Here!">
 
-<button onclick="revealInfo()">Submit Code</button>
+<button onclick="checkCode()">Submit Code</button>
 
 <div id="extra-info" style="display: none;">
-    <a href="seamlessswimmingcleaning.github.io/eH5Q3j89f>Link To 20% Deal! Just show an employee when checking out!</a>
+    <a href="https://seamlessswimmingcleaning.github.io/eH5Q3j89f">Link To 20% Deal! Just show an employee when checking out!</a>
 </div>
 
-  
 <br>
 <br>
 
@@ -94,8 +93,8 @@
 <script>
 function checkCode() {
   const correctCode = "eH5Q3j89f"; 
-  const userInput = document.getElementById("code-input").value;
-  const infoDiv = document.getElementById("extra-info");
+  const userInput = document.getElementById("code-input").value; // Corrected ID
+  const infoDiv = document.getElementById("extra-info"); // Corrected ID
 
   if (userInput === correctCode) {
     infoDiv.style.display = "block"; 
@@ -105,6 +104,6 @@ function checkCode() {
   }
 }
 </script>      
-      
+
 </body>
 </html>
