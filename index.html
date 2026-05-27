@@ -14,6 +14,33 @@
       margin: 0; 
       height: 100vh; 
     }
+    /* Added clean styling for the new form elements */
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      color: #0F4028;
+      font-size: 19.5px;
+      font-weight: bold;
+      display: inline-block;
+      width: 180px;
+    }
+    select, input[type="text"], input[type="datetime-local"] {
+      font-size: 16px;
+      padding: 5px;
+      width: 250px;
+    }
+    .submit-btn {
+      background-color: #0F4028;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+      border: none;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #2E9485;
+    }
   </style>
 </head>
 <body>
@@ -48,7 +75,7 @@
 <h1 style="color:#0F4028; font-size: 19.5px;">Update Log</h1>
 <p style="color:#114B2F; font-size: 19.5px;">0.0.0 -- Opened SSC</p>  
 <p style="color:#114B2F; font-size: 19.5px;">0.0.1 -- Added Prices and fixed a few bugs</p>
-<p style="color:#114B2F; font-size: 19.5px;">0.1.0 -- Added Memberships and Special Deals</p>
+<p style="color:#114B2F; font-size: 19.01px;">0.1.0 -- Added Memberships and Special Deals</p>
 <p style="color:#114B2F; font-size: 19.5px;">0.1.1 -- Added New Background and Blog</p>  
 <br>
 
@@ -78,7 +105,6 @@
 <br>
 
 <input type="text" id="code-input" placeholder="Enter Codes Here!">
-
 <button onclick="checkCode()">Submit Code</button>
 
 <div id="extra-info" style="display: none;">
@@ -88,13 +114,49 @@
 <br>
 <br>
 
+<!-- NEW RESERVATION FORM SECTION -->
+<h1 style="color:#0F4028; font-size: 19.5px;">Book an Appointment</h1>
+<form id="reservation-form" onsubmit="bookAppointment(event)">
+  <div class="form-group">
+    <label for="client-name">Your Name:</label>
+    <input type="text" id="client-name" required placeholder="Enter full name">
+  </div>
+
+  <div class="form-group">
+    <label for="service-select">Select Item:</label>
+    <select id="service-select" required>
+      <option value="">-- Choose Option --</option>
+      <optgroup label="Single Cleansings">
+        <option value="Normal Cleansing ($1.00)">Normal Cleansing - $1.00</option>
+        <option value="Deep Cleansing ($1.50)">Deep Cleansing - $1.50</option>
+        <option value="Premium Cleansing ($2.50)">Premium Cleansing - $2.50</option>
+      </optgroup>
+      <optgroup label="Memberships">
+        <option value="Normal Membership ($3.50 to start)">Normal Membership - $3.50</option>
+        <option value="Deep Membership ($4.00 to start)">Deep Membership - $4.00</option>
+        <option value="Premium Membership ($4.50 to start)">Premium Membership - $4.50</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="appointment-time">Date & Time:</label>
+    <input type="datetime-local" id="appointment-time" required>
+  </div>
+
+  <button type="submit" class="submit-btn">Reserve Now</button>
+</form>
+
+<br>
+<br>
+
 <img src="SSC_Logo.jpg" alt="LOGO" style="width:1044px;height:747px;">
 
 <script>
 function checkCode() {
   const correctCode = "eH5Q3j89f"; 
-  const userInput = document.getElementById("code-input").value; // Corrected ID
-  const infoDiv = document.getElementById("extra-info"); // Corrected ID
+  const userInput = document.getElementById("code-input").value;
+  const infoDiv = document.getElementById("extra-info");
 
   if (userInput === correctCode) {
     infoDiv.style.display = "block"; 
@@ -102,6 +164,24 @@ function checkCode() {
   } else {
     alert("Invalid code. Try again.");
   }
+}
+
+// NEW FUNCTION TO HANDLE FORM SUBMISSION
+function bookAppointment(event) {
+  event.preventDefault(); // Prevents page reload
+  
+  const name = document.getElementById("client-name").value;
+  const service = document.getElementById("service-select").value;
+  const time = document.getElementById("appointment-time").value;
+  
+  // Format the date for the alert box
+  const dateObj = new Date(time);
+  const formattedDate = dateObj.toLocaleString();
+
+  alert(`Thank you, ${name}!\nYour reservation for: ${service}\nhas been set for: ${formattedDate}.\n\nPlease show this confirmation message to an employee at checkout.`);
+  
+  // Reset the form fields after submission
+  document.getElementById("reservation-form").reset();
 }
 </script>      
 
