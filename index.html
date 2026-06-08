@@ -25,7 +25,7 @@
       display: inline-block;
       width: 180px;
     }
-    select, input[type="text"], input[type="datetime-local"] {
+    select, input[type="text"], input[type="email"], input[type="datetime-local"] {
       font-size: 16px;
       padding: 5px;
       width: 250px;
@@ -51,7 +51,7 @@
 <br>
 
 <h1 style="color:#0F4028; font-size: 19.5px;">About This Establishment:</h1>
-<p style="color:#114B2F; font-size: 19.5px;">This establishment was founded on June 21st of 2025. Our goal is to have everybody's swimming goggles be as clean as can be. To do this we have a filtration pump using the finest of clean waters. We use a premium sponge to clean it off (only premium experience). We have three different experiences of cleaning. Normal experience choosers get their goggles cleaned using our engineered cleaner for goggles to get the outside, inside, and lenses. Deep cleans experience hand washed and better waters. Premium experience chooser get hand washed using our premium sponge. We deep clean the goggles making sure there is no dirt.</p>
+<p style="color:#114B2F; font-size: 19.5px;">This establishment was founded on June 21st of 2025. Our goal is to have everybody's swimming goggles be as clean as can be. To do this we have a filtratio[...]
 
 <br>
 
@@ -93,7 +93,7 @@
 <br>
 <br>
 <h1 style="color:#0F4028; font-size: 19.5px;">Memberships -- About</h1>
-<p style="color:#114B2F; font-size: 19.5px;">Memberships are ways to pay less and earn more! By paying for our memberships we clean them for free! Memberships have different prices according to what cleansing we do.</p>  
+<p style="color:#114B2F; font-size: 19.5px;">Memberships are ways to pay less and earn more! By paying for our memberships we clean them for free! Memberships have different prices according to what c[...]
 
 <br>
 
@@ -120,6 +120,11 @@
   <div class="form-group">
     <label for="client-name">Your Name:</label>
     <input type="text" id="client-name" required placeholder="Enter full name">
+  </div>
+
+  <div class="form-group">
+    <label for="client-email">Your Email:</label>
+    <input type="email" id="client-email" required placeholder="Enter your email">
   </div>
 
   <div class="form-group">
@@ -166,19 +171,28 @@ function checkCode() {
   }
 }
 
-// NEW FUNCTION TO HANDLE FORM SUBMISSION
+// FUNCTION TO HANDLE FORM SUBMISSION AND SEND EMAIL
 function bookAppointment(event) {
   event.preventDefault(); // Prevents page reload
   
   const name = document.getElementById("client-name").value;
+  const email = document.getElementById("client-email").value;
   const service = document.getElementById("service-select").value;
   const time = document.getElementById("appointment-time").value;
   
-  // Format the date for the alert box
+  // Format the date for the confirmation
   const dateObj = new Date(time);
   const formattedDate = dateObj.toLocaleString();
 
-  alert(`Thank you, ${name}!\nYour reservation for: ${service}\nhas been set for: ${formattedDate}.\n\nPlease show this confirmation message to an employee at checkout.`);
+  // Create confirmation email content
+  const subject = "Seamless Swimming Cleaning - Reservation Confirmation";
+  const emailBody = `Hello ${name},\n\nThank you for booking with Seamless Swimming Cleaning!\n\nReservation Details:\n- Service: ${service}\n- Date & Time: ${formattedDate}\n\nPlease show this confirmation email to an employee at checkout.\n\nIf you have any questions, contact us at: sscdue15@gmail.com\n\nBest regards,\nSeamless Swimming Cleaning Team`;
+
+  // Send email using mailto link
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+  // Show confirmation alert
+  alert(`Thank you, ${name}!\nYour reservation for: ${service}\nhas been set for: ${formattedDate}.\n\nA confirmation email has been sent to ${email}. Please show this email to an employee at checkout.`);
   
   // Reset the form fields after submission
   document.getElementById("reservation-form").reset();
