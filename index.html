@@ -41,6 +41,39 @@
     .submit-btn:hover {
       background-color: #2E9485;
     }
+    .service-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 190px;
+    }
+    .service-group {
+      margin-bottom: 10px;
+    }
+    .service-group-title {
+      color: #0F4028;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .checkbox-item input[type="checkbox"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+    .checkbox-item label {
+      margin: 0;
+      width: auto;
+      display: inline;
+      cursor: pointer;
+      font-weight: normal;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -133,23 +166,48 @@
   </div>
 
   <div class="form-group">
-    <label for="service-select">Select Item:</label>
-    <select id="service-select" required>
-      <option value="">-- Choose Option --</option>
-      <optgroup label="Single Cleansings">
-        <option value="Normal Cleansing ($1.00)">Normal Cleansing - $1.00</option>
-        <option value="Deep Cleansing ($1.50)">Deep Cleansing - $1.50</option>
-        <option value="Premium Cleansing ($2.50)">Premium Cleansing - $2.50</option>
-      </optgroup>
-      <optgroup label="Memberships">
-        <option value="Normal Membership ($3.50 to start)">Normal Membership - $3.50</option>
-        <option value="Deep Membership ($4.00 to start)">Deep Membership - $4.00</option>
-        <option value="Premium Membership ($4.50 to start)">Premium Membership - $4.50</option>
-      </optgroup>
-      <optgroup label="Other">
-        <option value="Gift Card (Custom Amount)">Gift Card - Custom Amount</option>
-      </optgroup>
-    </select>
+    <label>Select Items:</label>
+    <div class="service-options">
+      <div class="service-group">
+        <div class="service-group-title">Single Cleansings</div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="normal-cleansing" name="services" value="Normal Cleansing ($1.00)">
+          <label for="normal-cleansing">Normal Cleansing - $1.00</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="deep-cleansing" name="services" value="Deep Cleansing ($1.50)">
+          <label for="deep-cleansing">Deep Cleansing - $1.50</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="premium-cleansing" name="services" value="Premium Cleansing ($2.50)">
+          <label for="premium-cleansing">Premium Cleansing - $2.50</label>
+        </div>
+      </div>
+
+      <div class="service-group">
+        <div class="service-group-title">Memberships</div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="normal-membership" name="services" value="Normal Membership ($3.50 to start)">
+          <label for="normal-membership">Normal Membership - $3.50</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="deep-membership" name="services" value="Deep Membership ($4.00 to start)">
+          <label for="deep-membership">Deep Membership - $4.00</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="premium-membership" name="services" value="Premium Membership ($4.50 to start)">
+          <label for="premium-membership">Premium Membership - $4.50</label>
+        </div>
+      </div>
+
+      <div class="service-group">
+        <div class="service-group-title">Other</div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="gift-card" name="services" value="Gift Card (Custom Amount)">
+          <label for="gift-card">Gift Card - Custom Amount</label>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
@@ -185,22 +243,34 @@ function bookAppointment(event) {
   
   const name = document.getElementById("client-name").value;
   const email = document.getElementById("client-email").value;
-  const service = document.getElementById("service-select").value;
   const time = document.getElementById("appointment-time").value;
   
+  // Get all selected services
+  const checkboxes = document.querySelectorAll('input[name="services"]:checked');
+  const selectedServices = Array.from(checkboxes).map(cb => cb.value);
+
+  if (selectedServices.length === 0) {
+    alert("Please select at least one service!");
+    return;
+  }
+
   // Format the date for the confirmation
   const dateObj = new Date(time);
   const formattedDate = dateObj.toLocaleString();
 
+  // Create service list for email
+  const serviceList = selectedServices.join('\n- ');
+
   // Create confirmation email content
   const subject = "Seamless Swimming Cleaning - Reservation Confirmation";
-  const emailBody = `Hello ${name},\n\nThank you for booking with Seamless Swimming Cleaning!\n\nReservation Details:\n- Service: ${service}\n- Date & Time: ${formattedDate}\n\nPlease show this confirmation email to an employee at checkout.\n\nIf you have any questions, contact us at: sscdue15@gmail.com\n\nBest regards,\nSeamless Swimming Cleaning Team`;
+  const emailBody = `Hello ${name},\n\nThank you for booking with Seamless Swimming Cleaning!\n\nReservation Details:\n- Services:\n- ${serviceList}\n- Date & Time: ${formattedDate}\n\nPlease show this confirmation email to an employee at checkout.\n\nWe look forward to seeing you!\n\nBest regards,\nSeamless Swimming Cleaning Team`;
 
   // Send email using mailto link
   window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
   // Show confirmation alert
-  alert(`Thank you, ${name}!\nYour reservation for: ${service}\nhas been set for: ${formattedDate}.\n\nA confirmation email has been sent to ${email}. Please show this email to an employee at checkout.`);
+  const servicesText = selectedServices.join('\n- ');
+  alert(`Thank you, ${name}!\n\nYour reservation for:\n- ${servicesText}\n\nhas been set for: ${formattedDate}.\n\nA confirmation email has been sent to ${email}. Please show this email to an employee at checkout.`);
   
   // Reset the form fields after submission
   document.getElementById("reservation-form").reset();
