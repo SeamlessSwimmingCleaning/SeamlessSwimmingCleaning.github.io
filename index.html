@@ -30,6 +30,11 @@
       padding: 5px;
       width: 250px;
     }
+    input[type="datetime-local"]:disabled {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
     .submit-btn {
       background-color: #0F4028;
       color: white;
@@ -73,6 +78,12 @@
       cursor: pointer;
       font-weight: normal;
       font-size: 16px;
+    }
+    .time-warning {
+      color: #d9534f;
+      font-size: 14px;
+      display: none;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -215,11 +226,11 @@
       </div>
     </div>
   </div>
-</div>
 
   <div class="form-group">
     <label for="appointment-time">Date & Time:</label>
     <input type="datetime-local" id="appointment-time" required>
+    <div class="time-warning">Please select a time between 8:00 AM and 8:00 PM</div>
   </div>
 
   <button type="submit" class="submit-btn">Reserve Now</button>
@@ -244,6 +255,29 @@ function checkCode() {
   }
 }
 
+// Validate that time is between 8 AM and 8 PM
+function isValidTime(dateString) {
+  const dateObj = new Date(dateString);
+  const hour = dateObj.getHours();
+  // Allow times from 8 AM (8) to 7:59 PM (before 20:00)
+  return hour >= 8 && hour < 20;
+}
+
+// Add event listener to validate time input
+document.addEventListener('DOMContentLoaded', function() {
+  const timeInput = document.getElementById('appointment-time');
+  const timeWarning = document.querySelector('.time-warning');
+
+  timeInput.addEventListener('change', function() {
+    if (this.value && !isValidTime(this.value)) {
+      timeWarning.style.display = 'block';
+      this.value = '';
+    } else {
+      timeWarning.style.display = 'none';
+    }
+  });
+});
+
 // FUNCTION TO HANDLE FORM SUBMISSION AND SEND EMAIL
 function bookAppointment(event) {
   event.preventDefault(); // Prevents page reload
@@ -252,6 +286,12 @@ function bookAppointment(event) {
   const email = document.getElementById("client-email").value;
   const time = document.getElementById("appointment-time").value;
   
+  // Validate time is within business hours
+  if (!isValidTime(time)) {
+    alert("Please select a time between 8:00 AM and 8:00 PM");
+    return;
+  }
+
   // Get all selected services
   const checkboxes = document.querySelectorAll('input[name="services"]:checked');
   const selectedServices = Array.from(checkboxes).map(cb => cb.value);
@@ -268,16 +308,25 @@ function bookAppointment(event) {
   // Create service list for email
   const serviceList = selectedServices.join('\n- ');
 
-  // Create confirmation email content
-  const subject = "Seamless Swimming Cleaning - Reservation Confirmation";
-  const emailBody = `Hello ${name},\n\nThank you for booking with Seamless Swimming Cleaning!\n\nReservation Details:\n- Services:\n- ${serviceList}\n- Date & Time: ${formattedDate}\n\nPlease show this confirmation email to an employee at checkout.\n\nWe look forward to seeing you!\n\nBest regards,\nSeamless Swimming Cleaning Team`;
+  // Create confirmation email content for customer
+  const customerSubject = "Seamless Swimming Cleaning - Reservation Confirmation";
+  const customerEmailBody = `Hello ${name},\n\nThank you for booking with Seamless Swimming Cleaning!\n\nReservation Details:\n- Services:\n- ${serviceList}\n- Date & Time: ${formattedDate}\n\nPlease show this email to an employee at checkout.\n\nWe look forward to seeing you!\n\nBest regards,\nSeamless Swimming Cleaning Team`;
 
-  // Send email using mailto link
-  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+  // Create notification email content for staff
+  const staffSubject = `New Reservation - ${name}`;
+  const staffEmailBody = `New Appointment Booked!\n\nCustomer Name: ${name}\nCustomer Email: ${email}\n\nReservation Details:\n- Services:\n- ${serviceList}\n- Date & Time: ${formattedDate}\n\nPlease confirm the customer's appointment and prepare accordingly.`;
+
+  // Send email to customer
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(customerSubject)}&body=${encodeURIComponent(customerEmailBody)}`;
+
+  // Send email to staff (using BCC workaround - open a second mailto)
+  setTimeout(() => {
+    window.location.href = `mailto:sscdue15@gmail.com?subject=${encodeURIComponent(staffSubject)}&body=${encodeURIComponent(staffEmailBody)}`;
+  }, 100);
 
   // Show confirmation alert
   const servicesText = selectedServices.join('\n- ');
-  alert(`Thank you, ${name}!\n\nYour reservation for:\n- ${servicesText}\n\nhas been set for: ${formattedDate}.\n\nA confirmation email has been sent to ${email}. Please show this email to an employee at checkout.`);
+  alert(`Thank you, ${name}!\n\nYour reservation for:\n- ${servicesText}\n\nhas been set for: ${formattedDate}.\n\nA confirmation email has been sent to ${email}. Please show this email to an employee at checkout.\n\nThe staff has also been notified of your arrival!`);
   
   // Reset the form fields after submission
   document.getElementById("reservation-form").reset();
