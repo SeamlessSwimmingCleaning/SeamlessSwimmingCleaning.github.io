@@ -88,19 +88,27 @@
       margin-top: 5px;
     }
     
+  .checkbox-item input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px; 
+    cursor: pointer;   
+    flex-shrink: 0;    
+}
+    
     @media (max-width: 600px) {
   h1 {
-    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+    font-size: 1.5rem; 
   }
   .form-group {
-    margin-bottom: 10px; /* Reduce margin for mobile */
+    margin-bottom: 10px;
   }
 }
 
   </style>
 </head>
 <body>
-
+<main role="main">
 <h1 style="color:#0D3622; font-size: 35.5px;">Seamless Swimming Cleaning</h1> 
 
 <br>
@@ -162,7 +170,8 @@
 <p style="color:#114B2F; font-size: 1.21875rem;">Normal Membership -- Normal Cleansing free || $.50 off other cleansings! -- $1 membership fee + $2.50 per month [$3.50 to start!]</p>
 <p style="color:#114B2F; font-size: 1.21875rem;">Deep Membership -- Normal & Deep Cleansings free || $.75 off other cleansings! -- $1 membership fee + $3.00 per month [$4.00 to start!]</p>
 <p style="color:#114B2F; font-size: 1.21875rem;">Premium Membership -- All Cleansings free || $1 membership fee + $3.50 per month [$4.50 to start!]</p> 
-
+</main>
+<footer role="contentinfo"> 
 <br>
 
 <h1 style="color:#0F4028; font-size: 1.21875rem;">Extra Information!</h1>
@@ -230,11 +239,11 @@
         <div class="service-group-title">Other</div>
         <div class="checkbox-item">
           <input type="checkbox" id="virtual-gift-card" name="services" value="Virtual Gift Card (Custom Amount)">
-          <label for="gift-card">Virtual Gift Card - Custom Amount</label>
+          <label for="v-gift-card">Virtual Gift Card - Custom Amount</label>
         </div>
             <div class="checkbox-item">
               <input type="checkbox" id="physical-gift-card" name="services" value="Physical Gift Card (Custom Amount)">
-              <label for="gift-card">Physical Gift Card - Custom Amount</label>
+              <label for="p-gift-card">Physical Gift Card - Custom Amount</label>
             </div>
           </div>
         </div>
@@ -255,7 +264,7 @@
 <br>
 
 <img src="SSC_Logo.jpg" alt="LOGO" style="width:100%; height: auto;">
-
+</footer>
 <script>
 function checkCode() {
   const correctCode = "eH5Q3j89f"; 
