@@ -95,6 +95,12 @@
     cursor: pointer;   
     flex-shrink: 0;    
 }
+
+    .submit-button button {
+      width: auto;
+      height: 24px;
+      flex-shrink: 0;
+    }
     
     @media (max-width: 600px) {
   h1 {
@@ -178,7 +184,10 @@
 <p style="color:#114B2F; font-size: 1.21875rem;">We have an SEO score of 100!</p>
 
 <input type="text" id="code-input" placeholder="Enter Codes Here!">
-<button onclick="checkCode()">Submit Code</button>
+  
+  <br>
+  
+<button onclick="checkCode()" class="submit-button">Submit Code</button>
 
 <div id="extra-info" style="display: none;">
     <a href="https://seamlessswimmingcleaning.github.io/seamlessswimmingcleaning-eH5Q3j89f">Link To 20% Deal! Just show an employee when checking out!</a>
